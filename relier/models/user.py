@@ -15,7 +15,7 @@ class User(Model):
     is_admin = BooleanField(default=False)
     can_ask = BooleanField(default=True)
     can_answer = BooleanField(default=False)
-    timezone = CharField()
+    timezone = CharField(default='America/Chicago')
     html_email = BooleanField(default=True)
 
     @staticmethod
