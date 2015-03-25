@@ -21,6 +21,17 @@ class Invitation(Model):
     email = CharField()
     token = CharField()
 
+    @staticmethod
+    def send(organization, email):
+
+        token = generate_token()
+
+        while Invitation.select().where(Invitation.token == token).count() != 0:
+            token = generate_token()
+
+        Invitation.create(organization = organization, email = email,
+                            token = token)
+
     class Meta:
 
         database = database
