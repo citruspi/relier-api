@@ -12,9 +12,7 @@ class User(Model):
     is_admin = BooleanField(default=False)
     can_ask = BooleanField(default=True)
     can_answer = BooleanField(default=False)
-    city = CharField()
-    region = CharField()
-    country = CharField()
+    timezone = CharField()
     html_email = BooleanField(default=True)
 
     class Meta:
