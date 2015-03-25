@@ -2,7 +2,6 @@ from peewee import *
 from . import database
 from organization import Organization
 from invitation import Invitation
-import requests
 import bcrypt
 
 class User(Model):
@@ -19,26 +18,9 @@ class User(Model):
     html_email = BooleanField(default=True)
 
     @staticmethod
-    def from_invitation(firstname, lastname, password, address, invitation):
+    def from_invitation(firstname, lastname, password, invitation):
 
         invitation = Invitation.get(Invitation.id == invitation)
-
-        geoip_endpoint = 'https://freegeoip.net/json/{address}'
-        geoip_endpoint = geoip_endpoint.format(address = address)
-
-        timezone = None
-
-        r = requests.get(geoip_endpoint)
-
-        if r.status_code == 200:
-
-            try:
-                timezone = r.json()['time_zone']
-            except KeyError:
-                pass
-
-        if timezone is None:
-            timezone = 'America/Chicago'
 
         password = bcrypt.hashpw(password, bcrypt.gensalt())
 
@@ -46,8 +28,7 @@ class User(Model):
                             firstname = firstname,
                             lastname = lastname,
                             email = invitation.email,
-                            password = password,
-                            timezone = timezone)
+                            password = password)
 
         invitation.delete_instance()
 
