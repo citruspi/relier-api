@@ -19,7 +19,7 @@ class Invitation(Model):
 
     organization = ForeignKeyField(Organization, related_name='invitations')
     email = CharField()
-    token = CharField()
+    token = CharField(unique=True)
 
     @staticmethod
     def send(organization, email):
