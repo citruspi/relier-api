@@ -29,8 +29,11 @@ class Invitation(Model):
         while Invitation.select().where(Invitation.token == token).count() != 0:
             token = generate_token()
 
-        Invitation.create(organization = organization, email = email,
-                            token = token)
+        invitation = Invitation.create(organization = organization,
+                                        email = email,
+                                        token = token)
+
+        return invitation
 
     class Meta:
 
