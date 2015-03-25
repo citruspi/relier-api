@@ -24,28 +24,27 @@ class OrganizationResource(restful.Resource):
         except KeyError:
             abort(400)
 
+        if Organization.exists(name):
+            abort(409)
+
+        if User.exists(user['email']):
+            abort(409)
+
         with database.atomic() as transaction:
 
             try:
                 organization = Organization.create(name = name)
-            except Exception as e:
-                if type(e).__name__ == 'IntegrityError' and \
-                   'duplicate key value' in e.args[0]:
-
-                    abort(409)
+            except:
                 abort(500)
 
             user['password'] = bcrypt.hashpw(user['password'], bcrypt.gensalt())
             user['is_admin'] = True
             user['organization'] = organization
-
+            
             try:
                 User.create(**user)
-            except Exception, e:
-                if type(e).__name__ == 'IntegrityError' and \
-                    'duplicate key value' in a.args[0]:
-
-                    abort(409)
+            except Exception as e:
+                print e
                 abort(500)
 
         response = make_response('', 201)
