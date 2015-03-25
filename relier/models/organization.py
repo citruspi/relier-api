@@ -3,7 +3,7 @@ from . import database
 
 class Organization(Model):
 
-    name = CharField()
+    name = CharField(unique=True)
 
     @staticmethod
     def exists(name):
