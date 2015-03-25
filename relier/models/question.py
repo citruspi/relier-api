@@ -1,31 +1,15 @@
 from peewee import *
 from . import database
+from user import User
+from event import Event
 
 class Question(Model):
     
-    user_id = 
-
-
-
-
-
-organization = ForeignKeyField(Organization, related_name='users')
-    firstname = CharField()
-    lastname = CharField()
-    email = CharField(unique=True)
-    password = CharField()
-    is_admin = BooleanField(default=False)
-    can_ask = BooleanField(default=True)
-    can_answer = BooleanField(default=False)
-    city = CharField()
-    region = CharField()
-    country = CharField()
-
-
-
-
-
-
+    user = ForeignKeyField(User, related_name='questions')
+    event = ForeignKeyField(Event, related_name='questions')
+    created = DateTimeField()
+    updated = DateTimeField()
+    content = CharField()
 
     class Meta:
 

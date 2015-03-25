@@ -6,9 +6,9 @@ class Event(Model):
 
     organization = ForeignKeyField(Organization, related_name='events')
     start_time = DateTimeField()
-    title = CharField(null=False)
+    title = CharField()
     description = CharField()
-    video_source = CharField(choices="youtube")
+    video_source = CharField(choices="youtube", default="youtube")
     video_id = CharField()
     #TODO Should anonymous be defaulted to true? 
     is_anonymous = BooleanField(default=True)
