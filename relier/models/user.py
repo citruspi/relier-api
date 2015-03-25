@@ -16,7 +16,6 @@ class User(Model):
     region = CharField()
     country = CharField()
     html_email = BooleanField(default=True)
-    registration_token = CharField()
 
     class Meta:
 
