@@ -34,6 +34,12 @@ class User(Model):
 
         return user
 
+    @staticmethod
+    def exists(email):
+
+        query = User.select().where(User.email == email)
+        return query.count() != 0
+
     class Meta:
 
         database = database
