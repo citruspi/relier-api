@@ -3,7 +3,7 @@ from . import database
 
 class Event(Model):
 
-    organizationid = ForeignKeyField(Organization, related_names='organizations')
+    organization_id = ForeignKeyField(Organization, related_names='organizations')
     start_time = DateTimeField(null=False)
     title = CharField(null=False)
     description = CharField()
