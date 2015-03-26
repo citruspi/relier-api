@@ -1,7 +1,7 @@
 from flask import Flask
 from flask.ext import restful
 from organization import OrganizationResource
-from token import TokenResource
+from authentication import TokenResource
 
 app = Flask(__name__)
 api = restful.Api(app)
