@@ -95,6 +95,19 @@ class User(Model):
         user = User.get(User.id == id_)
         return user
 
+    def JSON(self):
+
+        return {
+                    'id': self.id,
+                    'first_name': self.firstname,
+                    'last_name': self.lastname,
+                    'timezone': self.timezone,
+                    'is_admin': self.is_admin,
+                    'can_ask': self.can_ask,
+                    'can_answer': self.can_answer,
+                    'email': self.email
+               }
+
     class Meta:
 
         database = database

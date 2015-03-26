@@ -43,16 +43,7 @@ class UserResource(restful.Resource):
 
         query = User.select().where(User.organization == g.user.organization)
 
-        users = [{
-                    'id': user.id,
-                    'first_name': user.firstname,
-                    'last_name': user.lastname,
-                    'timezone': user.timezone,
-                    'is_admin': user.is_admin,
-                    'can_ask': user.can_ask,
-                    'can_answer': user.can_answer,
-                    'email': user.email
-                 } for user in query]
+        users = [user.JSON() for user in query]
 
         return users
 
@@ -68,13 +59,4 @@ class UserInstance(AuthenticatedResource):
 
         user = User.get(User.id == user_id)
 
-        return {
-            'id': user.id,
-            'first_name': user.firstname,
-            'last_name': user.lastname,
-            'timezone': user.timezone,
-            'is_admin': user.is_admin,
-            'can_ask': user.can_ask,
-            'can_answer': user.can_answer,
-            'email': user.email
-        }
+        return user.JSON()
