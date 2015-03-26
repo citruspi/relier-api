@@ -27,10 +27,12 @@ class TokenResource(restful.Resource):
 
     def post(self):
 
+        if not request.json:
+            abort(400)
+
         try:
-            body = request.json
-            email = body['email_address']
-            password = body['password']
+            email = request.json['email_address']
+            password = request.json['password']
         except KeyError:
             abort(400)
 
@@ -40,4 +42,3 @@ class TokenResource(restful.Resource):
             abort(401)
 
         return {'token': token}
-
