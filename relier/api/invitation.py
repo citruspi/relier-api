@@ -38,3 +38,19 @@ class InvitationResource(AuthenticatedResource):
         invitations = [{'email': invitation.email} for invitation in query]
 
         return invitations
+
+class InvitationInstance(AuthenticatedResource):
+
+    def get(self, invitation_id):
+
+        if not g.user.is_admin:
+            abort(403)
+
+        query = Invitation.select().where(Invitation.id == invitation_id)
+
+        if query.count() == 0:
+            abort(404)
+
+        invitation = Invitation.get(Invitation.id == invitation_id)
+
+        return {'email': invitation.email}
