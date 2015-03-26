@@ -1,7 +1,6 @@
-from peewee import *
+from peewee import ForeignKeyField, DateTimeField, CharField, Model, BooleanField
 from . import database
 from organization import Organization
-from datetime import datetime 
 
 class Event(Model):
 
@@ -15,16 +14,6 @@ class Event(Model):
     end_time = DateTimeField(null=True)
     
 
-    def JSON(self):
-
-        return {
-                    'id': self.id,
-                    'start_time_text': self.start_time.strftime('%Y-%m-%d %H:%M'),
-                    'title': self.title,
-                    'description': self.description,
-                    'video_source' : self.video_source,
-                    'video_id' : self.video_id
-               }
     class Meta:
 
         database = database

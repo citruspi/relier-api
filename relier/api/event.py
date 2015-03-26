@@ -1,5 +1,5 @@
 from flask import abort, request, make_response
-from relier.models import Organization, Event
+from relier.models import Event, JsonHelper
 from relier.api import AuthenticatedResource
 from datetime import datetime
 from flask import g
@@ -59,14 +59,18 @@ class EventResource(AuthenticatedResource):
     
 
     def get(self):
-
         query = Event.select().where(Event.organization == g.user.organization)
-        events = [event.JSON() for event in query]
+        events = [JsonHelper.event_to_json(event= event, questions=True) for event in query]
         return events
 
 
 
 class EventInstance(AuthenticatedResource):
+
+    def get(self, event_id):
+        event = Event.get(Event.id == event_id)
+        return JsonHelper.event_to_json(event=event, questions = True)
+
     #Update a single event
     def put(self, event_id):
 
