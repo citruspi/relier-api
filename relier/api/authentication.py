@@ -1,6 +1,27 @@
 from flask.ext import restful
 from relier.models import User
-from flask import abort, request
+from flask import abort, request, g
+from functools import wraps
+
+def verify (function):
+
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        token = request.headers.get('Auth-Token')
+
+        user = User.authenticate(token)
+
+        if user is None:
+            abort(401)
+
+        g.user = user
+
+        return function(*args, **kwargs)
+    return wrapper
+
+class AuthenticatedResource(restful.Resource):
+
+    method_decorators = [verify]
 
 class TokenResource(restful.Resource):
 
