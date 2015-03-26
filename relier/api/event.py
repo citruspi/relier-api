@@ -1,9 +1,6 @@
-#from flask.ext import restful
 from flask import abort, request, make_response
 from relier.models import Organization, Event
 from relier.api import AuthenticatedResource
-#from relier.api.authentication import verify
-#from flask import g
 from datetime import datetime
 
 class EventResource(AuthenticatedResource):
@@ -12,19 +9,19 @@ class EventResource(AuthenticatedResource):
 
         try:
             body = request.json
-            organization_id = body['organization_id'].encode('utf-8')
-            start_time_text = body['start_time'].encode('utf-8')
-            title = body['title'].encode('utf-8')
-            description = body['title'].encode('utf-8')
-            video_source = body['video_source'].encode('utf-8')
-            video_id = body['video_id'].encode('utf-8')
-            is_anonymous = body['is_anonymous'].encode('utf-8')
+            organization_name = body['organization_name'].encode('utf-8')
+            start_time_text = body['event']['start_time_text'].encode('utf-8')
+            title = body['event']['title'].encode('utf-8')
+            description = body['event']['title'].encode('utf-8')
+            video_source = body['event']['video_source'].encode('utf-8')
+            video_id = body['event']['video_id'].encode('utf-8')
+            is_anonymous = body['event']['is_anonymous'].encode('utf-8')
 
-        except KeyError:
+        except Exception:
             abort(400)
 
 
-        org = Organization.select().where(Organization.id == organization_id).get();
+        org = Organization.select().where(Organization.name == organization_name).get();
         if org is None :
             abort(400)
         if not start_time_text: 
