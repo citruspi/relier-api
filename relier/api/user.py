@@ -60,3 +60,16 @@ class UserInstance(AuthenticatedResource):
         user = User.get(User.id == user_id)
 
         return user.JSON()
+
+    def delete(self, user_id):
+
+        if not g.user.is_admin or user_id == g.user.id:
+            abort(403)
+
+        if User.select().where(User.id == user_id).count() == 0:
+            abort(404)
+
+        user = User.get(User.id == user_id)
+        user.delete_instance()
+
+        return {}, 204
