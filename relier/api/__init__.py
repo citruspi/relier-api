@@ -4,7 +4,7 @@ from organization import OrganizationResource
 from authentication import TokenResource, AuthenticatedResource
 from user import UserResource, UserInstance
 from event import EventResource, EventInstance
-from question import QuestionResource, QuestionInstance
+from question import QuestionResource, QuestionInstance, AnswerResource
 from invitation import InvitationResource, InvitationInstance
 
 app = Flask(__name__)
@@ -20,3 +20,4 @@ api.add_resource(EventResource, '/events/')
 api.add_resource(EventInstance, '/events/<int:event_id>/')
 api.add_resource(QuestionResource, '/events/<int:event_id>/questions/')  
 api.add_resource(QuestionInstance, '/events/<int:event_id>/questions/<int:question_id>/') 
+api.add_resource(AnswerResource, '/events/<int:event_id>/questions/<int:question_id>/answers/') 

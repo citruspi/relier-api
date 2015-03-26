@@ -7,7 +7,6 @@ class QuestionResource(AuthenticatedResource):
 
     def post(self, event_id):
 
-        print 'QuestionResource'
         if not g.user.can_ask:
             abort(403)
 
@@ -70,3 +69,39 @@ class QuestionInstance(AuthenticatedResource):
                     'updated': question.updated.strftime('%Y-%m-%d %H:%M') if question.updated else '',
                     'answer': answer_json
                }
+
+class AnswerResource(AuthenticatedResource): 
+    def post(self, event_id, question_id):
+
+        if not g.user.can_answer:
+            abort(403)
+
+
+        try:
+            body = request.json
+            content = body['content'].encode('utf-8')
+        except Exception as e:
+            print e 
+            abort(400)
+
+
+        question = Question.get(Question.id == question_id)
+        if not question:
+            abort(400)
+
+        answer = Answer.create( question = question, 
+            created = datetime.now(), 
+            content = content)
+
+        response = make_response('', 201)
+        response.headers['Location'] = '/events/{id_}/questions/{question_id_}/answers/{answer_id_}'.format(id_ = event_id, question_id_ = question.id, answer_id_ = answer.id)
+        return response
+
+
+
+
+
+
+
+
+
