@@ -1,6 +1,7 @@
-from peewee import *
-from . import database
+from peewee import ForeignKeyField, DateTimeField, CharField, Model
 from event import Event
+from . import database
+
 
 class Question(Model):
 
@@ -10,5 +11,4 @@ class Question(Model):
     content = CharField()
 
     class Meta:
-
         database = database
