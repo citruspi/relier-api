@@ -61,7 +61,7 @@ class User(Model):
         password = password.encode('utf-8')
 
         if not User.exists(email):
-            return False
+            return None
 
         user = User.get(User.email == email)
         hashed = user.password.encode('utf-8')
