@@ -6,7 +6,7 @@ class Question(Model):
 
     event = ForeignKeyField(Event, related_name='questions')
     created = DateTimeField()
-    updated = DateTimeField()
+    updated = DateTimeField(null=True)
     content = CharField()
 
     class Meta:
