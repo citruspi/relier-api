@@ -40,7 +40,7 @@ class Invitation(Model):
 
         token = token.encode('utf-8')
 
-        query = Organization.select().where(Invitation.token == token)
+        query = Invitation.select().where(Invitation.token == token)
         return query.count() != 0
 
     class Meta:
