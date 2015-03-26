@@ -12,6 +12,7 @@ class Event(Model):
     video_id = CharField()
     #TODO Should anonymous be defaulted to true? 
     is_anonymous = BooleanField(default=True)
+    end_time = DateTimeField(null=True)
 
     class Meta:
 
