@@ -3,6 +3,20 @@ from . import database
 from organization import Organization
 from invitation import Invitation
 import bcrypt
+import string
+import random
+import redis
+
+def generate_token():
+
+    token = ''
+    length = 10
+    pool = string.ascii_lowercase + string.digits
+
+    for _ in range(60):
+        token += random.SystemRandom().choice(pool)
+
+    return token
 
 class User(Model):
 
