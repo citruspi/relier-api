@@ -35,6 +35,14 @@ class Invitation(Model):
 
         return invitation
 
+    @staticmethod
+    def exists(token):
+
+        token = token.encode('utf-8')
+
+        query = Organization.select().where(Invitation.token == token)
+        return query.count() != 0
+
     class Meta:
 
         database = database
