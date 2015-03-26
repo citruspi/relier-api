@@ -83,6 +83,8 @@ class User(Model):
     @staticmethod
     def authenticate(token):
 
+        token = str(token).encode('utf-8')
+
         r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
         id_ = r.get('auth_token_'+token)
