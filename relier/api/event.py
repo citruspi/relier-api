@@ -2,22 +2,29 @@ from flask import abort, request, make_response
 from relier.models import Organization, Event
 from relier.api import AuthenticatedResource
 from datetime import datetime
-
+from flask import g
+from pprint import  pprint
 class EventResource(AuthenticatedResource):
     #Create New Event
     def post(self):
 
+        if not g.user.is_admin:
+            abort(403)
+
         try:
             body = request.json
+            pprint(body)
+
             organization_name = body['organization_name'].encode('utf-8')
             start_time_text = body['event']['start_time_text'].encode('utf-8')
             title = body['event']['title'].encode('utf-8')
             description = body['event']['title'].encode('utf-8')
             video_source = body['event']['video_source'].encode('utf-8')
             video_id = body['event']['video_id'].encode('utf-8')
-            is_anonymous = body['event']['is_anonymous'].encode('utf-8')
+            is_anonymous = body['event'].get('is_anonymous', False)
 
-        except Exception:
+        except Exception as e:
+            print e 
             abort(400)
 
 
