@@ -79,6 +79,20 @@ class User(Model):
         r.set('auth_token_'+token, user.id)
 
         return token
+
+    @staticmethod
+    def authenticate(token):
+
+        r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+        id_ = r.get('auth_token_'+token)
+
+        if id_ is None:
+            return None
+
+        user = User.get(User.id == id_)
+        return user
+
     class Meta:
 
         database = database
