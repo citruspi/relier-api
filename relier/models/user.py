@@ -54,6 +54,31 @@ class User(Model):
         query = User.select().where(User.email == email)
         return query.count() != 0
 
+    @staticmethod
+    def login(email, password):
+
+        email = email.encode('utf-8')
+        password = password.encode('utf-8')
+
+        if not User.exists(email):
+            return False
+
+        user = User.get(User.email == email)
+        hashed = user.password.encode('utf-8')
+
+        if bcrypt.hashpw(password, hashed) != hashed:
+            return None
+
+        r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+        token = generate_token()
+
+        while r.get('auth_token_'+token) is not None:
+            token = generate_token()
+
+        r.set('auth_token_'+token, user.id)
+
+        return token
     class Meta:
 
         database = database
