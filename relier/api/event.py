@@ -60,7 +60,7 @@ class EventResource(AuthenticatedResource):
 
     def get(self):
         query = Event.select().where(Event.organization == g.user.organization)
-        events = [JsonHelper.event_to_json(event= event, questions=True) for event in query]
+        events = [JsonHelper.event_to_json(event= event, questions=False) for event in query]
         return events
 
 
@@ -92,7 +92,7 @@ class EventInstance(AuthenticatedResource):
         new_start_time_text = body['start_time_text']
         if new_start_time_text: 
             date = datetime.strptime(new_start_time_text,'%Y-%m-%d %H:%M') 
-            event.start_date = date
+            event.start_time = date
 
         event.video_id = body.get('video_id', event.video_id)
         event.is_anonymous =  body.get('is_anonymous', event.is_anonymous)
@@ -103,9 +103,22 @@ class EventInstance(AuthenticatedResource):
 
         return {}, 204
 
+class EventEndInstance(AuthenticatedResource): 
 
+    def post(self, event_id): 
 
+        event = Event.get(Event.id == event_id)
+        if not event: 
+            abort(404)
+        start_time = event.start_time
+        now = datetime.now()
 
+        if start_time > now:
+            abort(400)
+
+        event.end_time = now
+        event.save()
+        return JsonHelper.event_to_json(event=event, questions=False), 200
 
 
 

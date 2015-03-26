@@ -12,7 +12,8 @@ class JsonHelper:
                     'title': event.title,
                     'description': event.description,
                     'video_source' : event.video_source,
-                    'video_id' : event.video_id
+                    'video_id' : event.video_id, 
+                    'end_time': event.end_time.strftime('%Y-%m-%d %H:%M') if event.end_time else ''
                }
 
 
