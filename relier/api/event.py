@@ -57,6 +57,15 @@ class EventResource(AuthenticatedResource):
         response = make_response('', 201)
         response.headers['Location'] = '/events/{id_}/'.format(id_ = event.id)
         return response
+    
+
+    def get(self):
+
+        query = Event.select().where(Event.organization == g.user.organization)
+        events = [event.JSON() for event in query]
+
+        return events
+
 
 
 class EventInstance(AuthenticatedResource):
