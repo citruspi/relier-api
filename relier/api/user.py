@@ -1,6 +1,7 @@
 from flask.ext import restful
 from flask import abort, request, make_response
 from relier.models import User, Invitation
+from relier.api import AuthenticatedResource
 from relier.api.authentication import verify
 from flask import g
 
@@ -54,3 +55,26 @@ class UserResource(restful.Resource):
                  } for user in query]
 
         return users
+
+class UserInstance(AuthenticatedResource):
+
+    def get(self, user_id):
+
+        if not g.user.is_admin and user_id != g.user.id:
+            abort(403)
+
+        if User.select().where(User.id == user_id).count() == 0:
+            abort(404)
+
+        user = User.get(User.id == user_id)
+
+        return {
+            'id': user.id,
+            'first_name': user.firstname,
+            'last_name': user.lastname,
+            'timezone': user.timezone,
+            'is_admin': user.is_admin,
+            'can_ask': user.can_ask,
+            'can_answer': user.can_answer,
+            'email': user.email
+        }
