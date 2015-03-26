@@ -40,7 +40,7 @@ class OrganizationResource(restful.Resource):
             user['password'] = bcrypt.hashpw(user['password'], bcrypt.gensalt())
             user['is_admin'] = True
             user['organization'] = organization
-            
+
             try:
                 User.create(**user)
             except Exception as e:
