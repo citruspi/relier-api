@@ -1,6 +1,12 @@
 from flask import Flask
 from flask.ext import restful
 from cors import crossdomain
+
+class Resource(restful.Resource):
+
+    def options(self):
+        pass
+
 from organization import OrganizationResource
 from authentication import TokenResource, AuthenticatedResource
 from user import UserResource, UserInstance
