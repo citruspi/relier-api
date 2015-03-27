@@ -1,0 +1,32 @@
+{% extends 'base.j2' %}
+
+{% block page %}
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-danger" role="alert">{{message}}</div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                <form method='POST' action='/login/'>
+                  <div class="form-group">
+                    <input type="email" class="form-control" name="email_address" placeholder="Email Address">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
