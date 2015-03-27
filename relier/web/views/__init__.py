@@ -9,3 +9,4 @@ from register import RegisterView
 from new_event import NewEvent
 from delete_event import DeleteEvent
 from invitations import Invitations
+from delete_invitation import DeleteInvitation

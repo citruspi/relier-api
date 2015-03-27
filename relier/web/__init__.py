@@ -1,5 +1,5 @@
 from flask import Flask, session, g, redirect
-from relier.web.views import Login, EventView, Home, Events, Questions, Answers, RegisterView, NewEvent, DeleteEvent, Invitations
+from relier.web.views import Login, EventView, Home, Events, Questions, Answers, RegisterView, NewEvent, DeleteEvent, Invitations, DeleteInvitation
 from relier.models import User
 
 app = Flask(__name__)
@@ -27,3 +27,4 @@ app.add_url_rule('/events/<int:event_id>/questions/', view_func=Questions.as_vie
 app.add_url_rule('/events/<int:event_id>/questions/<int:question_id>/answers/', view_func=Answers.as_view('answers'))
 app.add_url_rule('/register/', view_func=RegisterView.as_view('register'))
 app.add_url_rule('/invitations/', view_func=Invitations.as_view('invitations'))
+app.add_url_rule('/invitations/<int:invitation_id>/delete/', view_func=DeleteInvitation.as_view('delete_invitation'))
