@@ -18,6 +18,9 @@
                         <th>Starts</th>
                         <th>Ends</th>
                         <th>Description</th>
+                        {% if g.user.is_admin %}
+                        <th></th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +30,11 @@
                         <td>{{ event.start_time }}</td>
                         <td>{{ event.end_time }}</td>
                         <td>{{ event.description }}</td>
+                        {% if g.user.is_admin %}
+                        {% if not event.end_time %}
+                        <td><a href='/events/{{event.id}}/delete/' class="btn btn-danger btn-block">Delete</a></td>
+                        {% endif %}
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
