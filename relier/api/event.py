@@ -113,20 +113,20 @@ class EventInstance(AuthenticatedResource):
         if not g.user.is_admin:
             abort(403)
 
-        event = Event.get(Event.id == event_id )
-        if not event: 
-            abort(400)
+        try:
+            event = Event.get(Event.id == event_id)
+        except Event.DoesNotExist: 
+            abort(404)
 
+        event.title = body['event'].get('title', event.title)
+        event.description = body['event'].get('description', event.description)
 
-        event.title = body.get('title', event.title)
-        event.description = body.get('description', event.description)
-
-        new_start_time_text = body['start_time_text']
+        new_start_time_text = body['event']['start_time_text']
         if new_start_time_text: 
             date = datetime.strptime(new_start_time_text,'%Y-%m-%d %H:%M') 
             event.start_time = date
 
-        event.video_id = body.get('video_id', event.video_id)
+        event.video_id = body['event'].get('video_id', event.video_id)
         event.is_anonymous =  body.get('is_anonymous', event.is_anonymous)
 
 
@@ -141,10 +141,11 @@ class EventEndInstance(AuthenticatedResource):
 
         if not g.user.is_admin: 
             abort(403)
-
-        event = Event.get(Event.id == event_id)
-        if not event: 
+        try:
+            event = Event.get(Event.id == event_id)
+        except Event.DoesNotExist:
             abort(404)
+
         start_time = event.start_time
         now = datetime.now()
 
