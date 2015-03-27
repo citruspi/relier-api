@@ -16,7 +16,7 @@ from invitation import InvitationResource, InvitationInstance
 
 app = Flask(__name__)
 api = restful.Api(app)
-api.decorators=[crossdomain(origin='*', headers=['Content-Type'])]
+api.decorators=[crossdomain(origin='*', headers=['Content-Type', 'Auth-Token'])]
 
 api.add_resource(OrganizationResource, '/organizations')
 api.add_resource(TokenResource, '/tokens')
