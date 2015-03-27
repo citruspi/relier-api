@@ -13,7 +13,7 @@ class QuestionResource(AuthenticatedResource):
         event = None
         try:
             body = request.json
-            content = body['content'].encode('utf-8')
+            content = body['question']['content'].encode('utf-8')
         except Exception:
             abort(400)
 
@@ -46,7 +46,7 @@ class QuestionInstance(AuthenticatedResource):
 
         question = Question.get(Question.id == question_id)
         
-        return QuestionInstance.question_to_json(question)
+        return {'question': QuestionInstance.question_to_json(question)}
 
     def delete(self, event_id, question_id):
 
@@ -94,7 +94,7 @@ class AnswerResource(AuthenticatedResource):
 
         try:
             body = request.json
-            content = body['content'].encode('utf-8')
+            content = body['answer']['content'].encode('utf-8')
         except Exception as e:
             print e 
             abort(400)

@@ -5,3 +5,4 @@ from home import Home
 from events import Events
 from questions import Questions
 from answers import Answers
+from register import RegisterView
