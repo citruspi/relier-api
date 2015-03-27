@@ -1,12 +1,11 @@
-from flask.ext import restful
 from flask import abort, request, make_response
 from relier.models import User, Invitation
-from relier.api import AuthenticatedResource
+from relier.api import Resource, AuthenticatedResource
 from relier.api.authentication import verify
 from flask import g
 import bcrypt
 
-class UserResource(restful.Resource):
+class UserResource(Resource):
 
     def post(self):
 
