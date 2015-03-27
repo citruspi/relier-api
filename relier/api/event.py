@@ -61,7 +61,7 @@ class EventResource(AuthenticatedResource):
     def get(self):
         query = Event.select().where(Event.organization == g.user.organization)
         events = [JsonHelper.event_to_json(event= event, questions=False) for event in query]
-        return events
+        return {'events':events}
 
 
 
@@ -71,7 +71,7 @@ class EventInstance(AuthenticatedResource):
 
         if not g.user.is_admin: 
             abort(403)
-            
+
         try:
             event = Event.get(Event.id == event_id)
         except Event.DoesNotExist:
