@@ -44,10 +44,23 @@
                     </div>
                 </div>
                 {% for answer in question.answers %}
-                {% if loop.index == 0 %}
+                {% if loop.index == 1 %}
+                <br>
                 <div class="row">
                     <div class="col-md-12 col-md-offset-1">
                     {{ answer.content }}
+                    </div>
+                </div>
+                {% endif %}
+                {% else %}
+                {% if g.user.can_answer %}
+                <br>
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-1">
+                        <form method='POST' action='/events/{{event.id}}/questions/{{question.id}}/answers/'>
+                            <textarea class="form-control" name="answer" rows="2"></textarea><br>
+                            <button class="btn btn-primary btn-block">Submit Reply</button>
+                        </form>
                     </div>
                 </div>
                 {% endif %}
