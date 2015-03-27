@@ -13,12 +13,12 @@ class EventResource(AuthenticatedResource):
 
         try:
             body = request.json
-            start_time_text = body['start_time_text'].encode('utf-8')
-            title = body['title'].encode('utf-8')
-            description = body['description'].encode('utf-8')
-            video_source = body['video_source'].encode('utf-8')
-            video_id = body['video_id'].encode('utf-8')
-            is_anonymous = body.get('is_anonymous', False)
+            start_time_text = body['event']['start_time_text'].encode('utf-8')
+            title = body['event']['title'].encode('utf-8')
+            description = body['event']['description'].encode('utf-8')
+            video_source = body['event']['video_source'].encode('utf-8')
+            video_id = body['event']['video_id'].encode('utf-8')
+            is_anonymous = body['event'].get('is_anonymous', False)
 
         except Exception as e:
             print e 
