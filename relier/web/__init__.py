@@ -8,7 +8,13 @@ app.config['SECRET_KEY'] = '42'
 @app.before_request
 def fetch_user():
 
-    user = User.authenticate(session.get('token'))
+    user = None
+
+    try:
+        user = User.authenticate(session.get('token'))
+    except:
+        pass
+    
     g.user = user
 
 def authenticated(f):
