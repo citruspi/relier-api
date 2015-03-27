@@ -6,6 +6,7 @@ import bcrypt
 class RegisterView(MethodView):
 
     def get(self):
+        print 'Get hit'
         return render_template('register.j2')
 
     @staticmethod
@@ -41,12 +42,18 @@ class RegisterView(MethodView):
         return redirect('/login')
 
     def post(self):
+        print 'POST hit'
+        print 'form'
+        print request.form
 
         organization_name = request.form.get('organization')
-        first_name = request.form.get('email_address')
+        first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         email_address = request.form.get('email_address')
         password = request.form.get('password')
+
+        print organization_name
+        print email_address
 
         if request.form.get('email_address') is None:
             flash('Missing email address.')
