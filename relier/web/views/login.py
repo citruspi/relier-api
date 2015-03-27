@@ -26,4 +26,6 @@ class Login(MethodView):
             return render_template('login.j2')
 
         session['token'] = token
+        session.modified = True
+
         return redirect('/')
