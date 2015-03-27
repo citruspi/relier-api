@@ -49,7 +49,22 @@ class QuestionInstance(AuthenticatedResource):
         return QuestionInstance.question_to_json(question)
 
     def delete(self, event_id, question_id):
-        pass
+
+        if not g.user.is_admin: 
+            abort(403)
+
+        question = None
+        try:
+            question = Question.get(Question.id == question_id)
+        except Question.DoesNotExist:
+            abort(404)
+
+        answer_delete_query = Answer.delete().where(Answer.question == question)
+        answer_delete_query.execute()
+
+        question.delete_instance();
+        response = make_response('', 204)
+        return response 
 
     @staticmethod
     def question_to_json(question): 
