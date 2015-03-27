@@ -1,5 +1,5 @@
 from flask import Flask, session, g, redirect
-from relier.web.views import Login
+from relier.web.views import Login, EventView
 from relier.models import User
 
 app = Flask(__name__)
@@ -26,3 +26,4 @@ def authenticated(f):
     return decorator
 
 app.add_url_rule('/login/', view_func=Login.as_view('login'))
+app.add_url_rule('/events/<int:event_id>/', view_func=authenticated(EventView.as_view('event')))

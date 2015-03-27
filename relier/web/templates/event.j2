@@ -1,0 +1,39 @@
+{% extends 'base.j2' %}
+
+{% block page %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{{ event.title }}</h2>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="embed-responsive embed-responsive-16by9">
+                    {% if event.video_source == "youtube" %}
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{event.video_id}}" allowfullscreen></iframe>
+                    {% endif %}
+                </div>
+                <br>
+                <dl class="dl-horizontal">
+                    <dt>Starts</dt>
+                    <dd>{{event.start_time}}</dd>
+                    <dt>Ends</dt>
+                    <dd>{{event.end_time}}</dd>
+                    <dt>Description</dt>
+                    <dd>{{event.description}}</dd>
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary btn-block">Submit New Question</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
