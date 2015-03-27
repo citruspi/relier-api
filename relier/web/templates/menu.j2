@@ -12,6 +12,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/events/">Events</a></li>
+                {% if g.user.is_admin %}
+                <li><a href="/invitations/">Invitations</a></li>
+                {% endif %}
                 <li><a href="#">Preferences</a></li>
                 <li><a href="#">Logout</a></li>
             </ul>
