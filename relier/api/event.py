@@ -1,5 +1,5 @@
 from flask import abort, request, make_response
-from relier.models import Event, JsonHelper
+from relier.models import Event, JsonHelper, Question, Answer
 from relier.api import AuthenticatedResource
 from datetime import datetime
 from flask import g
@@ -67,6 +67,35 @@ class EventResource(AuthenticatedResource):
 
 class EventInstance(AuthenticatedResource):
 
+    def delete(self, event_id): 
+
+        if not g.user.is_admin: 
+            abort(403)
+            
+        try:
+            event = Event.get(Event.id == event_id)
+        except Event.DoesNotExist:
+            abort(400)
+
+        
+        query = Question.select().where(Question.event == event)
+        for question in query:
+            print "question with id{_x}".format(_x=question.id)
+            try: 
+                answer = Answer.get(Answer.question == question).get()
+                print 'Delete answer'
+                answer.delete_instance()
+            except Answer.DoesNotExist:
+                pass
+
+        question_delete_query =  Question.delete().where(Question.event == event)
+        question_delete_query.execute()
+
+        print 'Delete event'
+        event.delete_instance()
+        return {}, 204
+             
+
     def get(self, event_id):
         event = Event.get(Event.id == event_id)
         return JsonHelper.event_to_json(event=event, questions = True)
@@ -106,6 +135,9 @@ class EventInstance(AuthenticatedResource):
 class EventEndInstance(AuthenticatedResource): 
 
     def post(self, event_id): 
+
+        if not g.user.is_admin: 
+            abort(403)
 
         event = Event.get(Event.id == event_id)
         if not event: 
