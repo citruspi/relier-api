@@ -10,7 +10,7 @@ from invitation import InvitationResource, InvitationInstance
 
 app = Flask(__name__)
 api = restful.Api(app)
-api.decorators=[crossdomain(origin='*')]
+api.decorators=[crossdomain(origin='*', headers=['Content-Type'])]
 
 api.add_resource(OrganizationResource, '/organizations')
 api.add_resource(TokenResource, '/tokens')
