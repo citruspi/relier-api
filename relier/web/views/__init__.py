@@ -6,3 +6,4 @@ from events import Events
 from questions import Questions
 from answers import Answers
 from register import RegisterView
+from new_event import NewEvent
