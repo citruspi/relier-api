@@ -6,6 +6,9 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 style="text-align:center">You don't have any events yet!</h3>
+                {% if g.user.is_admin %}
+                <h3 style="text-align:center"><a href='/events/new/'>Create One Now</a></h3>
+                {% endif %}
             </div>
         </div>
     </div>
