@@ -97,8 +97,11 @@ class EventInstance(AuthenticatedResource):
              
 
     def get(self, event_id):
-        event = Event.get(Event.id == event_id)
-        return JsonHelper.event_to_json(event=event, questions = True)
+        try:
+            event = Event.get(Event.id == event_id)
+        except Event.DoesNotExist:
+            abort(404)
+        return {'event': JsonHelper.event_to_json(event=event, questions = True)}
 
     #Update a single event
     def put(self, event_id):
