@@ -33,8 +33,16 @@ class RegisterView(MethodView):
                     abort(500)
 
                 db_password = bcrypt.hashpw(password,bcrypt.gensalt())
+                
+                print "Details"
+                print db_password
+                print organization.name
+                print first_name
+                print last_name
 
-                User.create(password = db_password, is_admin = True, organization = organization)
+
+
+                User.create(password = db_password, is_admin = True, organization = organization, firstname = first_name, lastname = last_name, email = email_address)
         except Exception as e: 
             print e
             abort(500)
@@ -49,13 +57,13 @@ class RegisterView(MethodView):
         organization_name = request.form.get('organization')
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
-        email_address = request.form.get('email_address')
-        password = request.form.get('password')
+        email_address = request.form.get('email')
+        password = request.form.get('password').encode('utf-8')
 
         print organization_name
         print email_address
 
-        if request.form.get('email_address') is None:
+        if email_address is None:
             flash('Missing email address.')
             return render_template('register.j2')
 
