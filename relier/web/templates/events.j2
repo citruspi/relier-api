@@ -2,6 +2,13 @@
 
 {% block page %}
 <div class="container">
+    {% if g.user.is_admin %}
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+            <a href="/events/new/" class="btn btn-primary btn-block">Create Event</a>
+        </div>
+    </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-12">
             <table class="table table-hover">
