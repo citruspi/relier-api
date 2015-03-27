@@ -14,16 +14,8 @@ def fetch_user():
         user = User.authenticate(session.get('token'))
     except:
         pass
-    
+
     g.user = user
 
-def authenticated(f):
-
-    def decorator(*args, **kwargs):
-        if g.user is None:
-            return redirect('/login/')
-        return f(*args, **kwargs)
-    return decorator
-
 app.add_url_rule('/login/', view_func=Login.as_view('login'))
-app.add_url_rule('/events/<int:event_id>/', view_func=authenticated(EventView.as_view('event')))
+app.add_url_rule('/events/<int:event_id>/', view_func=EventView.as_view('event'))
