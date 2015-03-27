@@ -1,0 +1,35 @@
+{% extends 'base.j2' %}
+
+{% block page %}
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                <form method='POST' action='/invitation/{{invitation.token}}/'>
+                    <div class="form-group">
+                        <label>Organization</label>
+                      <input type="email" class="form-control"  value="{{invitation.organization.name}}" disabled>
+                    </div>
+                  <div class="form-group">
+                      <label>Email Address</label>
+                    <input type="email" class="form-control" value="{{invitation.email}}" disabled>
+                  </div>
+                  <div class="form-group">
+                      <label>First Name</label>
+                    <input type="text" class="form-control" name="first_name">
+                  </div>
+                  <div class="form-group">
+                      <label>Last Name</label>
+                    <input type="text" class="form-control" name="last_name">
+                  </div>
+
+                  <div class="form-group">
+                      <label>Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
