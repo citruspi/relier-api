@@ -1,4 +1,4 @@
-from flask.ext import restful
+from relier.api import Resource
 from relier.models import User
 from flask import abort, request, g
 from functools import wraps
@@ -19,11 +19,11 @@ def verify (function):
         return function(*args, **kwargs)
     return wrapper
 
-class AuthenticatedResource(restful.Resource):
+class AuthenticatedResource(Resource):
 
     method_decorators = [verify]
 
-class TokenResource(restful.Resource):
+class TokenResource(Resource):
 
     def post(self):
 

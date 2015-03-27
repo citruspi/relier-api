@@ -1,6 +1,12 @@
 from flask import Flask
 from flask.ext import restful
 from cors import crossdomain
+
+class Resource(restful.Resource):
+
+    def options(self):
+        pass
+
 from organization import OrganizationResource
 from authentication import TokenResource, AuthenticatedResource
 from user import UserResource, UserInstance
@@ -10,7 +16,7 @@ from invitation import InvitationResource, InvitationInstance
 
 app = Flask(__name__)
 api = restful.Api(app)
-api.decorators=[crossdomain(origin='*')]
+api.decorators=[crossdomain(origin='*', headers=['Content-Type'])]
 
 api.add_resource(OrganizationResource, '/organizations')
 api.add_resource(TokenResource, '/tokens')
